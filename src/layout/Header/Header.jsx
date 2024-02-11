@@ -77,7 +77,9 @@ const Header = () => {
                 {user ? (
                   <button onClick={handleLogout}>Log out</button>
                 ) : (
-                  <button><Link to="/login">Log in</Link></button>
+                  <button>
+                    <Link to="/login">Log in</Link>
+                  </button>
                 )}
               </li>
             </ul>
@@ -108,15 +110,23 @@ const Header = () => {
               tabIndex={0}
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <Link to="/" className="btn btn-success text-xl">
+              <Link to="/" className="btn btn-success text-xl mb-2">
                 Home
               </Link>
-              <Link to="/login" className="btn btn-info text-xl">
-                Login
-              </Link>
-              <Link to="/register" className="btn btn-primary text-xl">
-                Register
-              </Link>
+              {user && (
+                <Link to="/orders" className="btn btn-success text-xl mb-2">
+                  Orders
+                </Link>
+              )}
+              {user ? (
+                <button className="btn btn-info text-xl" onClick={handleLogout}>
+                  Log out
+                </button>
+              ) : (
+                <Link to="/login" className="btn btn-info text-xl">
+                  Log in
+                </Link>
+              )}
             </ul>
           </div>
         </div>
