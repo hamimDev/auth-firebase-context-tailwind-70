@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div className="">
       <div className="navbar bg-slate-700 lg:p-4 grid grid-cols-5 lg:grid-cols-4 fixed z-50">
@@ -16,10 +26,12 @@ const Header = () => {
             <Link to="/" className="btn btn-ghost text-xl">
               Home
             </Link>
-            <Link to="/login" className="btn btn-ghost text-xl">
-              Login
+            <Link to="/orders" className="btn btn-ghost text-xl">
+              Orders
             </Link>
-            
+            <h1 className="btn btn-ghost text-xl">
+              {user && <div>{user.email}</div>}
+            </h1>
           </div>
         </div>
 
@@ -40,7 +52,11 @@ const Header = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  src={
+                    user
+                      ? user.photoURL
+                      : `https://cdn-icons-png.freepik.com/256/11655/11655956.png?ga=GA1.1.540724036.1706111289&semt=ais`
+                  }
                 />
               </div>
             </div>
@@ -58,7 +74,11 @@ const Header = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                {user ? (
+                  <button onClick={handleLogout}>Log out</button>
+                ) : (
+                  <button><Link to="/login">Log in</Link></button>
+                )}
               </li>
             </ul>
           </div>

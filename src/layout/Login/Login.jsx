@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register/Register";
 import { AuthContext } from "../../providers/AuthProviders";
 
@@ -7,6 +7,7 @@ const Login = (event) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   
   const handleLogin = (event) => {
@@ -16,6 +17,7 @@ const Login = (event) => {
         const NewUser = result.user;
         console.log(NewUser);
         event.target.reset();
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
